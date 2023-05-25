@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<header>
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">The Chaperone</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'home' %}">Домашняя <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'brands' %}">Бренды</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'create' %}">Создать объявление</a>
+            </li>
+          </ul>
+          <form class="form-inline mt-2 mt-md-0">
+            <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="window.location.href='{% url 'profile' %}'">Профиль</button>
+          </form>
+        </div>
+      </nav>
+    </header>
+<div style="display: flex; flex-wrap: wrap; justify-content: center;">
+{% for mark in marks %}
+  <div style="flex: 25%; padding: 5px; text-align: center;">
+    <a href=""><img src="{{ mark.photo_Mark.url }}" alt="{{ mark.name_Mark }}" style="max-width: 300px; max-height: 300px;" /></a>
+    <p>{{ mark.name_Mark }}</p>
+  </div>
+{% endfor %}
+</div>
+</body>
+</html>

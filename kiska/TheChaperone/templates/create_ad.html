@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Добавление объявления</title>
+</head>
+<body>
+	<h1>Добавление объявления</h1>
+	<form method="post" action="{% url 'create_ad' %}">
+		{% csrf_token %}
+		<label for="comm_Ad">Комментарий:</label>
+
+		<input type="text" id="comm_Ad" name="comm_Ad">
+
+	<div class="form-group">
+    <label for="metro_Ad">Местоположение:</label>
+    <select class="form-control" id="metro_Ad" name="metro_Ad">
+        {% for metro in metros %}
+        <option value="{{ metro.id_Met }}">{{ metro.name_Met }}</option>
+        {% endfor %}
+    </select>
+	</div>
+
+	<div class="form-group">
+	<label for="car_Ad">Машина:</label>
+	<select class="form-control" id="car_Ad" name="car_Ad">
+		{% for car in cars %}
+		{% if car.user_Car == user %}
+		<option value="{{ car.id_Car }}">{{ car.model_Car.name_Mark }} {{car.model_Car.name_Mod}} {{car.statenum_Car}}</option>
+		{% endif %}
+		{% endfor %}
+	</select>
+</div>
+
+
+		<label for="price_Ad">Цена:</label>
+
+		<input type="text" id="price_Ad" name="price_Ad">
+		<input type="hidden" name="user_Ad" id="id_user_Ad" class="form-control" value="{{ user.id_User }}">
+		<input type="hidden" name="date_Ad" id="id_date_Ad" class="form-control" value="{% now 'Y-m-d' %}">
+		<input type="submit" value="Добавить">
+	</form>
+</body>
+</html>

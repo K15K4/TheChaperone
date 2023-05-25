@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>The Chaperone</title>
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link href="../../css/editor.css" rel="stylesheet">
+</head>
+<body>
+{% block content %}
+<div>
+<h2>Редактирование профиля</h2>
+<form method="post" action="{% url 'edit_user' user.id_User %}">
+    {% csrf_token %}
+    <div class="form-group">
+    <label for="username">Логин:</label>
+    <input type="text" class="form-control" id="username" name="username" value="{{ user.log_User }}">
+</div>
+    <div class="form-group">
+        <label for="password">Пароль:</label>
+        <input type="password" class="form-control" id="password" name="password" value="{{ user.pass_User }}">
+    </div>
+    <div class="form-group">
+        <label for="phone">Телефон:</label>
+        <input type="text" class="form-control" id="phone" name="phone" value="{{ user.phone_User }}">
+    </div>
+    <div class="form-group">
+        <label for="email">E-mail:</label>
+        <input type="email" class="form-control" id="email" name="email" value="{{ user.email_User }}">
+    </div>
+    <div class="form-group">
+    <label for="city">Город:</label>
+    <select class="form-control" id="city" name="city">
+        {% for city in cities %}
+        {% if city.id_City == user.city_User.id_City %}
+        <option value="{{ city.id_City }}" selected>{{ city.name_City }}</option>
+        {% else %}
+        <option value="{{ city.id_City }}">{{ city.name_City }}</option>
+        {% endif %}
+        {% endfor %}
+    </select>
+</div>
+
+    <div class="form-group">
+        <label for="first_name">Имя:</label>
+        <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.name_User }}">
+    </div>
+    <div class="form-group">
+        <label for="last_name">Фамилия:</label>
+        <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.surname_User }}">
+    </div>
+    <div class="form-group">
+        <label for="birth_date">Дата рождения:</label>
+        <input type="date" class="form-control" id="birth_date" name="birth_date" value="{{ user.birth_User }}">
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>
+{% endblock %}
+</div>
+</body>
+</html>

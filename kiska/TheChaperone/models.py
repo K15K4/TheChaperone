@@ -1,11 +1,12 @@
 from django.db import models
-from .services import get_path_upload_photo_workers
+from .services import photo_сar
 # Create your models here.
 
 
 class Mark(models.Model):
     id_Mark = models.AutoField(primary_key=True)
     name_Mark = models.CharField(max_length=50)
+    photo_Mark = models.ImageField(upload_to='photo_mark', null=True, blank=True)
 
     def __str__(self):
         return self.name_Mark
@@ -231,6 +232,8 @@ class Car(models.Model):
     body_Car = models.ForeignKey(Bodywork, on_delete=models.CASCADE)
     mileage_Car = models.IntegerField(default=1)
     damage_Car = models.ForeignKey(DamageStatus, on_delete=models.CASCADE)
+    photo_Car = models.ImageField(upload_to='photo_сar', null=True, blank=True)
+    user_Car = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.vin_Car} {self.year_Car} {self.statenum_Car} {self.numown_Car} {self.mileage_Car}"

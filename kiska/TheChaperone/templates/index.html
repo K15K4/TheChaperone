@@ -1,10 +1,81 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
 
-</body>
+    <title>The Chaperone</title>
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link href="../../css/editor.css" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">The Chaperone</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'home' %}">Домашняя <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'brands' %}">Бренды</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'create' %}">Создать объявление</a>
+            </li>
+          </ul>
+          <form class="form-inline mt-2 mt-md-0">
+            <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="window.location.href='{% url 'profile' %}'">Профиль</button>
+          </form>
+        </div>
+      </nav>
+    </header>
+
+    <main role="main">
+      {% for ad in ads %}
+  <div class="container marketing">
+  <!-- START THE FEATURETTES -->
+  <hr class="featurette-divider">
+
+  <div class="row featurette">
+    <div class="col-md-4">
+    <h2 class="featurette-heading"><a href="{% url 'car_detail' car_id=ad.car_Ad.id_Car %}"><span style="color: black;">{{ ad.car_Ad.model_Car.name_Mark }}</span>
+    <span class="text-muted">{{ ad.car_Ad.model_Car.name_Mod }}</span></a></h2>
+      <p class="lead">{{ ad.comm_Ad }}</p>
+      <p class="lead">Двигатель: {{ ad.car_Ad.engine_Car.name_Engine }}</p>
+      <p class="lead">{{ ad.car_Ad.engine_Car.hp_Engine }} лошадиных сил</p>
+      <p class="lead">{{ ad.price_Ad }} рублей</p>
+      <p class="lead">{{ ad.loc_Ad.name_Met }}</p>
+    </div>
+    <div class="col-md-5">
+      <img src="{{ ad.car_Ad.photo_Car.url }}" alt="{{ ad.car_Ad.model_Car.name_Mark }} {{ ad.car_Ad.model_Car.name_Mod }}" class="featurette-image img-fluid mx-auto" style="max-width: 720px; max-height: 405px;">
+    </div>
+  </div>
+
+  <hr class="featurette-divider">
+
+</div><!-- /.container -->
+{% endfor %}
+
+
+      <!-- FOOTER -->
+      <footer class="container">
+        <p class="float-right"><a href="#">Back to top</a></p>
+        <p>© 2017-2018 Company, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+      </footer>
+
+    </main>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="../../js/vendor/popper.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/holderjs@2.9.4/holder.js"></script>
+    <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500" preserveAspectRatio="none" style="display: none; visibility: hidden; position: absolute; top: -100%; left: -100%;"><defs><style type="text/css"></style></defs><text x="0" y="25" style="font-weight:bold;font-size:25pt;font-family:Arial, Helvetica, Open Sans, sans-serif">500x500</text></svg></body>
 </html>

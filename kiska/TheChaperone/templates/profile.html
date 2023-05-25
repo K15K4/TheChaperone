@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>The Chaperone</title>
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link href="../../css/editor.css" rel="stylesheet">
+</head>
+<body>
+<header>
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">The Chaperone</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'home' %}">Домашняя <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'brands' %}">Бренды</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'create' %}">Создать объявление</a>
+            </li>
+          </ul>
+          <form class="form-inline mt-2 mt-md-0">
+            <button class="btn btn-outline-success my-2 my-sm-0" onclick="window.location.href='{% url 'profile' %}'">Профиль</button>
+          </form>
+        </div>
+      </nav>
+    </header>
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">Welcome to your profile page!</h2>
+        <p class="card-text">Your user ID is: {{ user.id_User }}</p>
+        <p class="card-text">Имя профиля: {{ user.log_User }}</p>
+        <p class="card-text">Email: {{ user.email_User }}</p>
+        <p class="card-text">Телефон: {{ user.phone_User }}</p>
+        <p class="card-text">Город: {{ user.city_User.name_City }}</p>
+        <p class="card-text">Имя: {{ user.name_User }}</p>
+        <p class="card-text">Фамилия: {{ user.surname_User }}</p>
+        <p class="card-text">День рождения: {{ user.birth_User }}</p>
+        <div class="d-flex justify-content-center align-items-center">
+            <form action="{% url 'edit_user' user.id_User %}" method="get">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-info">Редактировать</button>
+            </form>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-danger ml-2">Выйти</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

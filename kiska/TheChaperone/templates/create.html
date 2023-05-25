@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Создание объявления</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<header>
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">The Chaperone</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'home' %}">Домашняя <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'brands' %}">Бренды</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'create' %}">Создать объявление</a>
+            </li>
+          </ul>
+          <form class="form-inline mt-2 mt-md-0">
+            <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="window.location.href='{% url 'profile' %}'">Профиль</button>
+          </form>
+        </div>
+      </nav>
+    </header>
+<div class="container">
+	<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="id_model_Car">Model Car:</label>
+        <select name="model_Car" id="id_model_Car" class="form-control">
+            {% for model in models %}
+                <option value="{{ model.id_Mod }}">{{ model.name_Mark }} {{ model.name_Mod }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="id_cat_Car">Category Car:</label>
+        <select name="cat_Car" id="id_cat_Car" class="form-control">
+            {% for cat in carcats %}
+                <option value="{{ cat.id_CarCat }}">{{ cat.name_Cat }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="id_color_Car">Color Car:</label>
+        <select name="color_Car" id="id_color_Car" class="form-control">
+            {% for color in colors %}
+                <option value="{{ color.id_Color }}">{{ color.name_Color }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="id_trans_Car">Trans Car:</label>
+        <select name="trans_Car" id="id_trans_Car" class="form-control">
+            {% for trans in transmissions %}
+                <option value="{{ trans.id_Trans }}">{{ trans.name_Trans }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="id_handle_Car">Handle Car:</label>
+        <select name="handle_Car" id="id_handle_Car" class="form-control">
+            {% for handle in handles %}
+                <option value="{{ handle.id_Hand }}">{{ handle.name_Hand }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="id_wheel_Car">Wheel Car:</label>
+        <select name="wheel_Car" id="id_wheel_Car" class="form-control">
+            {% for wheel in wheeldrives %}
+                <option value="{{ wheel.id_Wheel }}">{{ wheel.name_Wheel }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="id_engine_Car">Engine Car:</label>
+        <select name="engine_Car" id="id_engine_Car" class="form-control">
+            {% for engine in engines %}
+                <option value="{{ engine.id_Engine }}">{{ engine.name_Engine }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="id_body_Car">Body Car:</label>
+        <select name="body_Car" id="id_body_Car" class="form-control">
+            {% for body in bodyworks %}
+                <option value="{{ body.id_Body }}">{{ body.name_Body }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="id_damage_Car">Damage Car:</label>
+        <select name="damage_Car" id="id_damage_Car" class="form-control">
+            {% for damage in damagestatuses %}
+                <option value="{{ damage.id_Dam }}">{{ damage.name_Dam }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="id_vin_Car">Vin Car:</label>
+        <input type="text" name="vin_Car" id="id_vin_Car" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="id_year_Car">Year Car:</label>
+        <input type="date" name="year_Car" id="id_year_Car" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="id_statenum_Car">Statenum Car:</label>
+        <input type="text" name="statenum_Car" id="id_statenum_Car" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="id_numown_Car">Numown Car:</label>
+        <input type="text" name="numown_Car" id="id_numown_Car" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="id_photo_Car">Photo Car:</label>
+    <input type="file" name="photo_Car" id="id_photo_Car" class="form-control">
+    </div>
+    <input type="hidden" name="user_Car" id="id_user_Car" class="form-control" value="{{ user.id_User }}">
+    <button type="submit" class="btn btn-primary">Add Car</button>
+</form>
+</div>
+</body>
+</html>
