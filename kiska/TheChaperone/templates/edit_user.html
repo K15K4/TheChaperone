@@ -14,9 +14,33 @@
 	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
     <link href="../../css/editor.css" rel="stylesheet">
 </head>
+<header>
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">The Chaperone</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'home' %}">Домашняя <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'brands' %}">Бренды</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'create' %}">Создать объявление</a>
+            </li>
+          </ul>
+          <form class="form-inline mt-2 mt-md-0">
+            <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="window.location.href='{% url 'profile' %}'">Профиль</button>
+          </form>
+        </div>
+      </nav>
+    </header>
 <body>
 {% block content %}
-<div>
+<div class="container">
 <h2>Редактирование профиля</h2>
 <form method="post" action="{% url 'edit_user' user.id_User %}">
     {% csrf_token %}
@@ -63,7 +87,7 @@
     </div>
     <button type="submit" class="btn btn-primary">Сохранить</button>
 </form>
-{% endblock %}
 </div>
+{% endblock %}
 </body>
 </html>

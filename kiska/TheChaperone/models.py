@@ -138,17 +138,6 @@ class DamageStatus(models.Model):
         db_table = "DamageStatus"
 
 
-class TypeOfAd(models.Model):
-    id_TypeAd = models.AutoField(primary_key=True)
-    name_TypeAd = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.name_TypeAd
-
-    class Meta:
-        db_table = "TypeOfAd"
-
-
 class AdStatus(models.Model):
     id_AdStat = models.AutoField(primary_key=True)
     name_AdStat = models.CharField(max_length=50)
@@ -197,6 +186,17 @@ class Engine(models.Model):
         db_table = "Engine"
 
 
+class UserStatus(models.Model):
+    id_UserStat = models.AutoField(primary_key=True)
+    name_UserStat = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name_UserStat
+
+    class Meta:
+        db_table = "UserStatus"
+
+
 class User(models.Model):
     id_User = models.AutoField(primary_key=True)
     log_User = models.CharField(max_length=50)
@@ -208,6 +208,7 @@ class User(models.Model):
     surname_User = models.CharField(max_length=50)
     birth_User = models.DateField()
     role_User = models.ForeignKey(Roles, on_delete=models.CASCADE)
+    status_User = models.ForeignKey(UserStatus, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.log_User} {self.pass_User} {self.phone_User} {self.email_User} {self.name_User} {self.surname_User} {self.birth_User}"
@@ -242,24 +243,19 @@ class Car(models.Model):
         db_table = "Car"
 
 
-"""class Photo(models.Model):
-    id_car = models.ForeignKey(Car, on_delete=models.CASCADE, primary_key=True)
-    id_photo = models.ImageField(upload_to=get_path_upload_photo_workers, blank=True, null=True, primary_key=True)"""
-
-
 class Advertisment(models.Model):
     id_Ad = models.AutoField(primary_key=True)
     user_Ad = models.ForeignKey(User, on_delete=models.CASCADE)
     car_Ad = models.ForeignKey(Car, on_delete=models.CASCADE)
-    comm_Ad = models.CharField(max_length=90)
-    type_Ad = models.ForeignKey(TypeOfAd, on_delete=models.CASCADE)
+    comm_Ad = models.CharField(max_length=280)
     date_Ad = models.DateField()
     loc_Ad = models.ForeignKey(Metro, on_delete=models.CASCADE)
     status_Ad = models.ForeignKey(AdStatus, on_delete=models.CASCADE)
     price_Ad = models.DecimalField(max_digits=20, decimal_places=2)
+    contact_Ad = models.CharField(max_length=140)
 
     def __str__(self):
-        return f"{self.comm_Ad} {self.date_Ad} {self.price_Ad}"
+        return f"{self.comm_Ad} {self.date_Ad} {self.price_Ad} {self.contact_Ad}"
 
     class Meta:
         db_table = "Advertisment"

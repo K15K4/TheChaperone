@@ -33,7 +33,7 @@
 <div style="display: flex; flex-wrap: wrap; justify-content: center;">
 {% for mark in marks %}
   <div style="flex: 25%; padding: 5px; text-align: center;">
-    <a href=""><img src="{{ mark.photo_Mark.url }}" alt="{{ mark.name_Mark }}" style="max-width: 300px; max-height: 300px;" /></a>
+    <a href="{% url 'brand' mark.name_Mark %}"><img src="{{ mark.photo_Mark.url }}" alt="{{ mark.name_Mark }}" style="max-width: 300px; max-height: 300px;" /></a>
     <p>{{ mark.name_Mark }}</p>
   </div>
 {% endfor %}

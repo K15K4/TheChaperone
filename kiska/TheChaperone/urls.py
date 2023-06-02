@@ -1,5 +1,7 @@
 from django.urls import path
-from .views import index, brands, create, profile, login, logout, guest, edit_user, create_ad, car_detail
+from .views import index, ad_report_pdf, brands, create, profile, login, \
+    logout, guest, edit_user, create_ad, car_detail, registration, ad_report, \
+    brand_view, edit_ad
 
 urlpatterns = [
     path('', index, name='home'),
@@ -12,5 +14,11 @@ urlpatterns = [
     path('edit_user/<int:user_id>/', edit_user, name='edit_user'),
     path('create_ad', create_ad, name='create_ad'),
     path('car/<int:car_id>/', car_detail, name='car_detail'),
+    path('registration', registration, name='registration'),
+    path('ad_report_pdf', ad_report_pdf, name='ad_report_pdf'),
+    path('ad_report_form', ad_report, name='ad_report'),
+    path('brand/<str:name_Mark>/', brand_view, name='brand'),
+    path('edit_ad/<int:ad_id>/', edit_ad, name='edit_ad'),
+
 
 ]
