@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Регистрация</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+</head>
+<body>
+<header>
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">The Chaperone</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'home' %}">Домашняя <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'brands' %}">Бренды</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'create' %}">Создать объявление</a>
+            </li>
+          </ul>
+          <form class="form-inline mt-2 mt-md-0">
+            <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="window.location.href='{% url 'profile' %}'">Профиль</button>
+          </form>
+        </div>
+      </nav>
+    </header>
+    <main>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card my-5">
+                        <div class="card-body">
+                            <h5 class="card-title text-center mb-3">Регистрация</h5>
+                            <form method="POST" action="/registration">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="login">Логин</label>
+                                    <input type="text" class="form-control" id="login" name="login" maxlength="50" placeholder="Логин">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Пароль</label>
+                                    <input type="password" class="form-control" id="password" name="password" maxlength="50" placeholder="Пароль">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Телефон</label>
+                                    <input type="text" class="form-control" id="phone" name="phone" maxlength="14" placeholder="Телефон">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" maxlength="50" aria-describedby="emailHelp" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="city">Город</label>
+                                    <select class="form-control" id="city" name="city">
+                                        {% for city in cities %}
+                                            {% if city.id_City == user.city_User.id_City %}
+                                                <option value="{{ city.id_City }}" selected>{{ city.name_City }}</option>
+                                            {% else %}
+                                                <option value="{{ city.id_City }}">{{ city.name_City }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Имя</label>
+                                    <input type="text" class="form-control" id="name" name="name" maxlength="50" placeholder="Имя">
+                                </div>
+                                <div class="form-group">
+                                    <label for="surname">Фамилия</label>
+                                    <input type="text" class="form-control" id="surname" name="surname" maxlength="50" placeholder="Фамилия">
+                                </div>
+                                <div class="form-group">
+                                    <label for="birth">Дата рождения</label>
+                                    <input type="date" class="form-control" id="birth" name="birth" placeholder="Дата рождения">
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                                <p>Уже есть аккаунт?</p>
+                                <a href="{% url 'login' %}">Войти</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="jquery-3.5.1.slim.min.js"></script>
+    <script src="popper.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+</body>
+</html>

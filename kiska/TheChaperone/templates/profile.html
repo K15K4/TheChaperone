@@ -39,29 +39,114 @@
         </div>
       </nav>
     </header>
-<div class="card">
-    <div class="card-body">
-        <h2 class="card-title">Welcome to your profile page!</h2>
-        <p class="card-text">Your user ID is: {{ user.id_User }}</p>
-        <p class="card-text">Имя профиля: {{ user.log_User }}</p>
-        <p class="card-text">Email: {{ user.email_User }}</p>
-        <p class="card-text">Телефон: {{ user.phone_User }}</p>
-        <p class="card-text">Город: {{ user.city_User.name_City }}</p>
-        <p class="card-text">Имя: {{ user.name_User }}</p>
-        <p class="card-text">Фамилия: {{ user.surname_User }}</p>
-        <p class="card-text">День рождения: {{ user.birth_User }}</p>
-        <div class="d-flex justify-content-center align-items-center">
-            <form action="{% url 'edit_user' user.id_User %}" method="get">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-outline-info">Редактировать</button>
-            </form>
-            <form action="{% url 'logout' %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-outline-danger ml-2">Выйти</button>
-            </form>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Имя и фамилия</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              {{ user.name_User }} {{ user.surname_User }}
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Email</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              {{ user.email_User }}
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Телефон</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              {{ user.phone_User }}
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Город</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              {{ user.city_User.name_City }}
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">День рождения</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              {{ user.birth_User }}
+            </div>
+          </div>
+          <hr>
+          <div class="d-flex justify-content-left align-items-center">
+                        <form action="{% url 'edit_user' user.id_User %}" method="get">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-info">Редактировать</button>
+                        </form>
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-danger ml-2">Выйти</button>
+                        </form>
+                    </div>
+                    {% if user.role_User_id == 2 %}
+                    <div>
+                        <form action="{% url 'ad_report_pdf' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-warning mt-3">Администрирование</button>
+                        </form>
+                    </div>
+                    {% endif %}
+            </div>
+            {% if user %}
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h3>Ваши объявления</h3>
+                    {% for ad in ads %}
+                    <div class="card mt-2">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <h4 class="card-title">{{ ad.car_Ad.brand_Car.name_Brand }} {{ ad.car_Ad.model_Car }}</h4>
+                                    <p class="card-text">Описание: {{ ad.comm_Ad }}</p>
+                                    <p class="card-text">Дата: {{ ad.date_Ad }}</p>
+                                    <p class="card-text">Местоположение: {{ ad.loc_Ad.name_Met }}</p>
+                                    <p class="card-text">Цена: {{ ad.price_Ad }} рублей</p>
+                                    <p class="card-text">Контакты: {{ ad.contact_Ad }}</p>
+                                </div>
+                                <div class="col-md-5">
+                                    <img src="{{ ad.car_Ad.photo_Car.url }}" alt="{{ car.model_Car.name_Mark }} {{ car.model_Car.name_Mod }}" class="featurette-image img-fluid mx-auto" style="max-width: 720px; max-height: 405px;">
+                                </div>
+                            </div>
+                            <form action="{% url 'edit_ad' ad.id_Ad %}" method="get">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-info">Редактировать</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
 
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+
 </body>
 </html>
+

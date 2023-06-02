@@ -1,5 +1,5 @@
+from .models import Mark, Models, Roles, CarCat, City, Metro, Color, Transmission, Handlebar, Wheeldrive, Bodywork, DamageStatus, UserStatus, AdStatus, FuelType, TypeOfEngine, Engine, User, Car, Advertisment
 from django.contrib import admin
-from .models import Mark, Models, Roles, CarCat, City, Metro, Color, Transmission, Handlebar, Wheeldrive, Bodywork, DamageStatus, TypeOfAd, AdStatus, FuelType, TypeOfEngine, Engine, User, Car, Advertisment
 
 
 @admin.register(Mark)
@@ -62,7 +62,7 @@ class AccessAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(TypeOfAd)
+@admin.register(UserStatus)
 class AccessAdmin(admin.ModelAdmin):
     pass
 
@@ -80,7 +80,6 @@ class AccessAdmin(admin.ModelAdmin):
 @admin.register(TypeOfEngine)
 class AccessAdmin(admin.ModelAdmin):
     pass
-
 
 
 @admin.register(Engine)

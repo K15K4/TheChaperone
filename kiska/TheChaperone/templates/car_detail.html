@@ -36,23 +36,36 @@
     <hr class="featurette-divider">
 
     <div class="row featurette">
-      <div class="col-md-4">
-        <h2 class="featurette-heading">{{ car.model_Car.name_Mark }}
-        <span class="text-muted">{{ car.model_Car.name_Mod }}</span></h2>
-        <p class="lead">Двигатель: {{ car.engine_Car.name_Engine }}</p>
-        <p class="lead">Двигатель: {{ car.engine_Car.f }}</p>
-        <p class="lead">{{ car.engine_Car.hp_Engine }} лошадиных сил</p>
-        <p class="lead">Количество владельцев: {{ car.numown_Car }}</p>
-        <p class="lead">Пробег: {{ car.mileage_Car }}</p>
-        <p class="lead">Состояние: {{ car.damage_Car.name_Dam }}</p>
-        <p class="lead">Цвет: {{ car.color_Car.name_Color }}</p>
-        <p class="lead">Государственный номер: {{ car.statenum_Car }}</p>
-      </div>
-      <div class="col-md-5">
-        <img src="{{ car.photo_Car.url }}" alt="{{ car.model_Car.name_Mark }} {{ car.model_Car.name_Mod }}" class="featurette-image img-fluid mx-auto" style="max-width: 720px; max-height: 405px;">
-      </div>
-    </div>
+  <div class="col-md-4">
+    <h2 class="featurette-heading">{{ car.model_Car.name_Mark }}
+    <span class="text-muted">{{ car.model_Car.name_Mod }}</span></h2>
+    <p class="lead">Двигатель: {{ car.engine_Car.name_Engine }}</p>
+    <p class="lead">{{ car.engine_Car.hp_Engine }} лошадиных сил</p>
+    <p class="lead">Количество владельцев: {{ car.numown_Car }}</p>
+    <p class="lead">Пробег: {{ car.mileage_Car }} км</p>
+    <p class="lead">Состояние: {{ car.damage_Car.name_Dam }}</p>
+    <p class="lead">Цвет: {{ car.color_Car.name_Color }}</p>
+    <p class="lead">Государственный номер: {{ car.statenum_Car }}</p>
+    {% for ad in ads %}
+    <p class="lead">Комментарий: {{ ad.comm_Ad }}</p>
+    <p class="lead">Дата объявления: {{ ad.date_Ad }}</p>
+    <p class="lead">Цена: {{ ad.price_Ad }} рублей</p>
+    <form class="form-inline mt-2 mt-md-0">
+      <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="window.open('{{ ad.contact_Ad }}', '_blank')">Связаться с продавцом</button>
+    </form>
+    {% endfor %}
+
+  </div>
+  <div class="col-md-5">
+    <img src="{{ car.photo_Car.url }}" alt="{{ car.model_Car.name_Mark }} {{ car.model_Car.name_Mod }}" class="featurette-image img-fluid mx-auto" style="max-width: 720px; max-height: 405px;">
+  </div>
+</div>
+
+
     <hr class="featurette-divider">
+    <form class="form-inline mt-2 mt-md-0">
+            <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="window.location.href='{% url 'home' %}'">Назад</button>
+          </form>
   </div><!-- /.container -->
 {% endblock %}
 
