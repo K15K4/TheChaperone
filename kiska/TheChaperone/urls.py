@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import index, ad_report_pdf, brands, create, profile, login, \
     logout, guest, edit_user, create_ad, car_detail, registration, ad_report, \
-    brand_view, edit_ad
+    brand_view, edit_ad, about
 
 urlpatterns = [
     path('', index, name='home'),
@@ -19,6 +19,7 @@ urlpatterns = [
     path('ad_report_form', ad_report, name='ad_report'),
     path('brand/<str:name_Mark>/', brand_view, name='brand'),
     path('edit_ad/<int:ad_id>/', edit_ad, name='edit_ad'),
+    path('about', about, name='about'),
 
 
 ]

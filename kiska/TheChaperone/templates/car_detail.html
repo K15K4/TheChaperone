@@ -8,7 +8,7 @@
 <body>
     <header>
       <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">The Chaperone</a>
+        <a class="navbar-brand" href="{% url 'about' %}">The Chaperone</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -50,9 +50,11 @@
     <p class="lead">Комментарий: {{ ad.comm_Ad }}</p>
     <p class="lead">Дата объявления: {{ ad.date_Ad }}</p>
     <p class="lead">Цена: {{ ad.price_Ad }} рублей</p>
-    <form class="form-inline mt-2 mt-md-0">
-      <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="window.open('{{ ad.contact_Ad }}', '_blank')">Связаться с продавцом</button>
-    </form>
+    {% if session %}
+  <form class="form-inline mt-2 mt-md-0">
+    <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="window.open('{{ ad.contact_Ad }}', '_blank')">Связаться с продавцом</button>
+  </form>
+{% endif %}
     {% endfor %}
 
   </div>

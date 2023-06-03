@@ -138,7 +138,6 @@ def brands(request):
 def profile(request):
     user_id = request.session.get('user_id')
     ads = Advertisment.objects.filter(user_Ad=user_id)
-    print(ads)
     if user_id is not None:
         user = User.objects.get(id_User=user_id)
         return render(request, 'profile.html', {'user': user, 'ads': ads})
@@ -184,9 +183,7 @@ def error(request):
 def car_detail(request, car_id):
     car = get_object_or_404(Car, pk=car_id)
     ads = Advertisment.objects.filter(car_Ad=car_id)
-    print(car)
-    print(ads)
-    context = {'car': car, 'ads': ads}
+    context = {'car': car, 'ads': ads, 'session': request.session.get('user_id', None)}
     return render(request, 'car_detail.html', context)
 
 
@@ -261,7 +258,7 @@ def ad_report_pdf(request):
             ('FONTNAME', (0, 0), (-1, 0), 'MyFont'),
             ('FONTSIZE', (0, 0), (-1, 0), 14),
             ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-            ('BACKGROUND', (0, 0), (-1, 0), colors.slategray),  # верхнее поле цветлосерое
+            ('BACKGROUND', (0, 0), (-1, 0), colors.slategray),  # верхнее поле cветлосерое
             ('BACKGROUND', (0, 1), (-1, 1), colors.lightgreen),  # нижнее поле светлозеленое
             ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
             ('FONTSIZE', (0, 1), (-1, -1), 12),
@@ -297,3 +294,11 @@ def edit_ad(request, ad_id):
         ad = Advertisment.objects.get(id_Ad=ad_id)
         metros = Metro.objects.all()
         return render(request, 'edit_ad.html', {'ad': ad, 'metros': metros})
+
+
+def about(request):
+    ads = Advertisment.objects.all()
+    ad_count = ads.count()
+    context = {'ad_count': ad_count}
+    return render(request, 'about.html', context)
+
