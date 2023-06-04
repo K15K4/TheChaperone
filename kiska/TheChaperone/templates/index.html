@@ -41,6 +41,7 @@
 
     <main role="main">
       {% for ad in ads %}
+        {% if ad.status_Ad_id != 2 %}
   <div class="container marketing">
   <!-- START THE FEATURETTES -->
   <hr class="featurette-divider">
@@ -63,6 +64,7 @@
   <hr class="featurette-divider">
 
 </div><!-- /.container -->
+        {% endif %}
 {% endfor %}
 
 

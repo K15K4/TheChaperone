@@ -1,13 +1,24 @@
 from datetime import timezone, datetime
 
 from reportlab.lib import colors
-from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.enums import TA_CENTER
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 
 from .models import Advertisment, User, Mark, City, Models, CarCat, UserStatus, Roles, Color, Transmission, Handlebar, Wheeldrive, Engine, Bodywork, DamageStatus, Car, Metro, AdStatus
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
 from reportlab.pdfbase.ttfonts import TTFont, pdfmetrics
+from io import BytesIO
+
+import matplotlib.pyplot as plt
+from django.http import HttpResponse
+from django.shortcuts import render
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.units import inch
+from reportlab.pdfgen import canvas
 
 
 def edit_user(request, user_id):
@@ -236,9 +247,9 @@ def ad_report_pdf(request):
         start_date = request.POST.get('start_date')
         end_date = request.POST.get('end_date')
         ads = Advertisment.objects.filter(date_Ad__range=[start_date, end_date])
-        ad_count = ads.count()
+        ad_data = [[ad.date_Ad.strftime("%d %b, %Y"), ads.filter(date_Ad=ad.date_Ad).count()] for ad in ads.distinct('date_Ad')]
 
-        # Create PDF document
+        # Создание PDF документа
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = f'attachment; filename="ad_report_{datetime.now(timezone.utc).strftime("%Y-%m-%d")}.pdf"'
 
@@ -246,27 +257,69 @@ def ad_report_pdf(request):
         elements = []
 
         styles = getSampleStyleSheet()
-        header = Paragraph('TheChaperone', styles['Heading1'])
+
+        # Стиль заголовка
+        centered_style = ParagraphStyle(
+            'centered',
+            parent=styles['Heading1'],
+            alignment=TA_CENTER,
+            fontName='Times-Bold',
+            fontSize=30,
+            spaceAfter=30
+        )
+        header = Paragraph('TheChaperone', centered_style)
         elements.append(header)
 
-        # Add table to PDF
-        data = [[u'Временной промежуток', u'Количество созданных объявлений'],
-                [f'{start_date} - {end_date}', ad_count]]
+        # Добавление текста в PDF
+        paragraph_text = f'Ниже представлен отчет за период с {start_date} по {end_date},' \
+                         f' по нему можно посмотреть сколько объявлений было создано за этот промежуток времени.'
+        paragraph_style = ParagraphStyle('paragraphStyle', fontName='MyFont', fontSize=14, leading=24, spaceAfter=20)
+        paragraph = Paragraph(paragraph_text, paragraph_style)
+        elements.append(paragraph)
+
+        # Добавление таблицы в PDF
+        data = [['Дата', 'Количество созданных объявлений']] + ad_data
         table = Table(data)
         table.setStyle(TableStyle([
             ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
             ('FONTNAME', (0, 0), (-1, 0), 'MyFont'),
             ('FONTSIZE', (0, 0), (-1, 0), 14),
             ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-            ('BACKGROUND', (0, 0), (-1, 0), colors.slategray),  # верхнее поле cветлосерое
-            ('BACKGROUND', (0, 1), (-1, 1), colors.lightgreen),  # нижнее поле светлозеленое
+            ('BACKGROUND', (0, 0), (-1, 0), colors.gray),  # верхнее поле светло-серое
             ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
             ('FONTSIZE', (0, 1), (-1, -1), 12),
             ('BOTTOMPADDING', (0, 1), (-1, -1), 6),
         ]))
         elements.append(table)
 
-        # Build PDF
+        # Добавление текста в PDF
+        paragraph_3_text = 'ООО The Chaperone'
+        paragraph_3_style = ParagraphStyle('paragraphStyle3', fontName='MyFont', fontSize=14, leading=24,
+                                           spaceBefore=20, alignment=TA_CENTER)
+        paragraph_3 = Paragraph(paragraph_3_text, paragraph_3_style)
+        elements.append(paragraph_3)
+
+        paragraph_4_text = 'г. Москва, бульвар маршалла Рокоссовского 39/22'
+        paragraph_4_style = ParagraphStyle('paragraphStyle4', fontName='MyFont', fontSize=14, leading=24, alignment=TA_CENTER)
+        paragraph_4 = Paragraph(paragraph_4_text, paragraph_4_style)
+        elements.append(paragraph_4)
+
+        paragraph_5_text = 'ИНН 43827078'
+        paragraph_5_style = ParagraphStyle('paragraphStyle5', fontName='MyFont', fontSize=14, leading=24, alignment=TA_CENTER)
+        paragraph_5 = Paragraph(paragraph_5_text, paragraph_5_style)
+        elements.append(paragraph_5)
+
+        paragraph_6_text = 'Email: zyonion@yandex.ru'
+        paragraph_6_style = ParagraphStyle('paragraphStyle6', fontName='MyFont', fontSize=14, leading=24, alignment=TA_CENTER)
+        paragraph_6 = Paragraph(paragraph_6_text, paragraph_6_style)
+        elements.append(paragraph_6)
+
+        paragraph_7_text = 'Телефон: 89998313967'
+        paragraph_7_style = ParagraphStyle('paragraphStyle7', fontName='MyFont', fontSize=14, leading=24, alignment=TA_CENTER)
+        paragraph_7 = Paragraph(paragraph_7_text, paragraph_7_style)
+        elements.append(paragraph_7)
+
+        # Создание PDF
         doc.build(elements)
         return response
     else:
@@ -288,12 +341,14 @@ def edit_ad(request, ad_id):
         ad.loc_Ad.name_Met = request.POST.get('location')
         ad.price_Ad = request.POST.get('price')
         ad.contact_Ad = request.POST.get('contacts')
+        ad.status_Ad_id = 2 if request.POST.get('sold') else 1 # Присваиваем значение 2, если чекбокс продано отмечен
         ad.save()
         return redirect('profile') # перенаправляем пользователя на страницу с его объявлениями
     else:
         ad = Advertisment.objects.get(id_Ad=ad_id)
         metros = Metro.objects.all()
-        return render(request, 'edit_ad.html', {'ad': ad, 'metros': metros})
+        statuses = AdStatus.objects.all()
+        return render(request, 'edit_ad.html', {'ad': ad, 'metros': metros, 'statuses': statuses})
 
 
 def about(request):

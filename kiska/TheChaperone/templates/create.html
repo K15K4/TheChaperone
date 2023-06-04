@@ -38,7 +38,7 @@
           {% csrf_token %}
           <div class="form-group">
               <label for="id_model_Car">Модель автомобиля:</label>
-              <select name="model_Car" id="id_model_Car" class="form-control">
+              <select name="model_Car" id="id_model_Car" class="form-control" required>
                   {% for model in models %}
                       <option value="{{ model.id_Mod }}">{{ model.name_Mark }} {{ model.name_Mod }}</option>
                   {% endfor %}
@@ -46,15 +46,15 @@
           </div>
           <div class="form-group">
               <label for="id_cat_Car">Категория автомобиля:</label>
-              <select name="cat_Car" id="id_cat_Car" class="form-control">
+              <select name="cat_Car" id="id_cat_Car" class="form-control" required>
                   {% for cat in carcats %}
                       <option value="{{ cat.id_CarCat }}">{{ cat.name_Cat }}</option>
                   {% endfor %}
               </select>
           </div>
           <div class="form-group">
-              <label for="id_color_Car">Цвет автомобиля:</label>
-              <select name="color_Car" id="id_color_Car" class="form-control">
+              <label for="id_color_Car">Цвет автомобиля:</label >
+              <select name="color_Car" id="id_color_Car" class="form-control" required>
                   {% for color in colors %}
                       <option value="{{ color.id_Color }}">{{ color.name_Color }}</option>
                   {% endfor %}
@@ -62,7 +62,7 @@
           </div>
           <div class="form-group">
               <label for="id_trans_Car">Коробка передач:</label>
-              <select name="trans_Car" id="id_trans_Car" class="form-control">
+              <select name="trans_Car" id="id_trans_Car" class="form-control" required>
                   {% for trans in transmissions %}
                       <option value="{{ trans.id_Trans }}">{{ trans.name_Trans }}</option>
                   {% endfor %}
@@ -70,7 +70,7 @@
           </div>
           <div class="form-group">
               <label for="id_handle_Car">Руль:</label>
-              <select name="handle_Car" id="id_handle_Car" class="form-control">
+              <select name="handle_Car" id="id_handle_Car" class="form-control" required>
                   {% for handle in handles %}
                       <option value="{{ handle.id_Hand }}">{{ handle.name_Hand }}</option>
                   {% endfor %}
@@ -78,7 +78,7 @@
           </div>
           <div class="form-group">
               <label for="id_wheel_Car">Привод:</label>
-              <select name="wheel_Car" id="id_wheel_Car" class="form-control">
+              <select name="wheel_Car" id="id_wheel_Car" class="form-control" required>
                   {% for wheel in wheeldrives %}
                       <option value="{{ wheel.id_Wheel }}">{{ wheel.name_Wheel }}</option>
                   {% endfor %}
@@ -86,7 +86,7 @@
           </div>
           <div class="form-group">
               <label for="id_engine_Car">Двигатель:</label>
-              <select name="engine_Car" id="id_engine_Car" class="form-control">
+              <select name="engine_Car" id="id_engine_Car" class="form-control" required>
                   {% for engine in engines %}
                       <option value="{{ engine.id_Engine }}">{{ engine.name_Engine }}</option>
                   {% endfor %}
@@ -94,7 +94,7 @@
           </div>
           <div class="form-group">
               <label for="id_body_Car">Кузов:</label>
-              <select name="body_Car" id="id_body_Car" class="form-control">
+              <select name="body_Car" id="id_body_Car" class="form-control" required>
                   {% for body in bodyworks %}
                       <option value="{{ body.id_Body }}">{{ body.name_Body }}</option>
                   {% endfor %}
@@ -102,7 +102,7 @@
           </div>
           <div class="form-group">
               <label for="id_damage_Car">Повреждения:</label>
-              <select name="damage_Car" id="id_damage_Car" class="form-control">
+              <select name="damage_Car" id="id_damage_Car" class="form-control" required>
                   {% for damage in damagestatuses %}
                       <option value="{{ damage.id_Dam }}">{{ damage.name_Dam }}</option>
                   {% endfor %}
@@ -110,23 +110,23 @@
           </div>
           <div class="form-group">
               <label for="id_vin_Car">VIN код:</label>
-              <input type="text" name="vin_Car" id="id_vin_Car" class="form-control">
+              <input type="text" name="vin_Car" id="id_vin_Car" class="form-control" required>
           </div>
           <div class="form-group">
               <label for="id_year_Car">Год выпуска:</label>
-              <input type="date" name="year_Car" id="id_year_Car" class="form-control">
+              <input type="date" name="year_Car" id="id_year_Car" class="form-control" required>
           </div>
           <div class="form-group">
               <label for="id_statenum_Car">Гос. номер:</label>
-              <input type="text" name="statenum_Car" id="id_statenum_Car" class="form-control">
+              <input type="text" name="statenum_Car" id="id_statenum_Car" class="form-control" required>
           </div>
           <div class="form-group">
               <label for="id_numown_Car">Количество владельцев:</label>
-              <input type="text" name="numown_Car" id="id_numown_Car" class="form-control">
+              <input type="text" name="numown_Car" id="id_numown_Car" class="form-control" required>
           </div>
           <div class="form-group">
               <label for="id_photo_Car">Фото автомобиля:</label>
-              <input type="file" name="photo_Car" id="id_photo_Car" class="form-control">
+              <input type="file" name="photo_Car" id="id_photo_Car" class="form-control" required>
           </div>
           <button type="submit" class="btn btn-primary">Создать объявление</button>
         </form>
